@@ -4,6 +4,7 @@ using System.Text;
 using DatingApp.Server.Data;
 using DatingApp.Server.DTOs;
 using DatingApp.Server.Models;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -23,6 +24,7 @@ namespace DatingApp.Server.Controllers
             _config = config;
         }
 
+        //[EnableCors("AllowSpecificOrigin")]
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody]UserForRegisterDto userForRegisterDto)
         {
@@ -45,6 +47,7 @@ namespace DatingApp.Server.Controllers
             return StatusCode(201);
         }
 
+        //[EnableCors("AllowSpecificOrigin")]
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UserForLoginDto userForLoginDto)
         {

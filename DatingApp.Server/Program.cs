@@ -12,11 +12,33 @@ builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("sqlConnection"))
 );
 
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy("AllowSpecificOrigin",
+//        policy =>
+//        {
+//            policy.WithOrigins("https://localhost:4200") // Angular app URL
+//                  .AllowAnyHeader()
+//                  .AllowAnyMethod();
+//        });
+//});
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        policy =>
+        {
+            policy.AllowAnyOrigin()
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddCors();
+
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 
 //we need to add Auth middleware in order to explain how to authorize the user
@@ -47,12 +69,20 @@ if (app.Environment.IsDevelopment())
 }
 
 //app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials());
-app.UseCors(x => x.AllowAnyHeader());
-app.UseCors(x => x.AllowAnyMethod());
-app.UseCors(x => x.AllowAnyOrigin());
-app.UseCors(x => x.AllowCredentials());
+
 
 app.UseHttpsRedirection();
+app.UseRouting();
+
+//app.UseCors(x => x.AllowAnyHeader());
+//app.UseCors(x => x.AllowAnyMethod());
+//app.UseCors(x => x.AllowAnyOrigin());
+//app.UseCors(x => x.AllowCredentials());
+//app.UseCors("AllowSpecificOrigin");
+
+// Use the CORS policy
+app.UseCors("AllowAllOrigins");
+
 app.UseAuthentication();
 app.UseAuthorization();
 
