@@ -6,7 +6,7 @@ import { map } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  baseUrl = "https://localhost:7088/api/auth/";
+  baseUrl = "http://localhost:5000/api/auth/";
 
 //we need http module so we need to inject it here
 constructor(private http: HttpClient) { }

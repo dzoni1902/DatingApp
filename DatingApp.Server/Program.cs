@@ -1,6 +1,9 @@
+using System.Net;
 using System.Text;
 using DatingApp.Server.Data;
+using DatingApp.Server.Helpers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
@@ -63,10 +66,31 @@ app.UseStaticFiles();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseDeveloperExceptionPage();
 }
+else
+{
+    //set global exception handler
+    app.UseExceptionHandler(builder =>
+    {
+        builder.Run(async context =>
+        {
+            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+
+            var error = context.Features.Get<IExceptionHandlerFeature>();
+            if (error != null)
+            {
+                //add new header to our response using extension method
+                context.Response.AddApplicationError(error.Error.Message);
+
+                //write error message in the http response
+                await context.Response.WriteAsync(error.Error.Message);
+            }
+        });
+    });
+} 
 
 //app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().AllowCredentials());
 
