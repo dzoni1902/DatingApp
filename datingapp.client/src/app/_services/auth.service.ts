@@ -3,12 +3,13 @@ import { Token } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { map } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  baseUrl = "http://localhost:5000/api/auth/";
+  baseUrl = environment.apiUrl + 'auth/'; 
   jwtHepler = new JwtHelperService();
 
   //property to store our decoded token in AuthService

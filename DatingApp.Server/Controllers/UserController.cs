@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DatingApp.Server.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class UsersController : ControllerBase 
     {
         private readonly IDatingRepository _repo;
         private readonly IMapper _mapper;
