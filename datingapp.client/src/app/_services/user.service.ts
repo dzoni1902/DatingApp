@@ -11,7 +11,6 @@ import { User } from '../_models/user';
 export class UserService {
   baseUrl = environment.apiUrl;
 
-
   constructor(private http: HttpClient) { }
 
   getUsers(): Observable<User[]> {
