@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { JwtModule } from '@auth0/angular-jwt';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { GalleriaModule } from 'primeng/galleria';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -27,6 +28,7 @@ import { MemberDetailComponent } from './members/member-detail/member-detail.com
 import { MemberDetailResolver } from './_resolvers/member-detail.resolver';
 import { MemberListResolver } from './_resolvers/member-list.resolver';
 
+
 export function getToken() {
   return localStorage.getItem('token');
 }
@@ -45,7 +47,9 @@ export function getToken() {
    ],
   imports: [
     BrowserModule, HttpClientModule,
-    AppRoutingModule, FormsModule, BrowserAnimationsModule,
+    AppRoutingModule, FormsModule, 
+    BrowserAnimationsModule,
+    GalleriaModule,
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
     RouterModule.forRoot(appRoutes),
