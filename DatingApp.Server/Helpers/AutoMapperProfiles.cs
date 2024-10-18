@@ -24,7 +24,9 @@ namespace DatingApp.Server.Helpers
                 .ForMember(dest => dest.Age, opt => opt.MapFrom<AgeResolver>());
 
             CreateMap<Photo, PhotoForDetailedDto>().ReverseMap();
-     
+
+            CreateMap<UserForUpdateDto, User>()
+                .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
         }
     }
 }
