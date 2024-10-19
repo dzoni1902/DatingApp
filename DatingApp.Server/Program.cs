@@ -41,6 +41,9 @@ builder.Services.AddCors(options =>
         });
 });
 
+//configure Cloudinary
+builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
+
 //if reference loop happening, ignore it
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
