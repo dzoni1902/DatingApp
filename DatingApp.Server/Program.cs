@@ -19,25 +19,16 @@ builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("sqlConnection"))
 );
 
-//builder.Services.AddCors(options =>
-//{
-//    options.AddPolicy("AllowSpecificOrigin",
-//        policy =>
-//        {
-//            policy.WithOrigins("https://localhost:4200") // Angular app URL
-//                  .AllowAnyHeader()
-//                  .AllowAnyMethod();
-//        });
-//});
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAllOrigins",
-        policy =>
+    options.AddPolicy("AllowSpecificOrigin",
+        builder =>
         {
-            policy.AllowAnyOrigin()
-                  .AllowAnyHeader()
-                  .AllowAnyMethod();
+            builder.WithOrigins("https://localhost:4200")
+                   .AllowAnyHeader()
+                   .AllowAnyMethod()
+                   .AllowCredentials();
         });
 });
 
@@ -118,14 +109,8 @@ else
 app.UseHttpsRedirection();
 app.UseRouting();
 
-//app.UseCors(x => x.AllowAnyHeader());
-//app.UseCors(x => x.AllowAnyMethod());
-//app.UseCors(x => x.AllowAnyOrigin());
-//app.UseCors(x => x.AllowCredentials());
-//app.UseCors("AllowSpecificOrigin");
-
 // Use the CORS policy
-app.UseCors("AllowAllOrigins");
+app.UseCors("AllowSpecificOrigin");
 
 app.UseAuthentication();
 app.UseAuthorization();
