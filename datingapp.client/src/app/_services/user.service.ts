@@ -27,4 +27,9 @@ export class UserService {
 
     return this.http.put(this.baseUrl + 'users/' + id, user);
   }
+
+  setMainPhoto(userId: number, photoId: number) {
+                                                            //since post req, we are sending empty object in body
+    return this.http.post(this.baseUrl + 'users/' + userId + '/photos/' + photoId + '/setMain', {});
+  }
 }
