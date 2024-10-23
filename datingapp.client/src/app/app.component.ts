@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './_services/auth.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { User } from './_models/user';
 
 interface WeatherForecast {
   date: string;
@@ -24,8 +25,16 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     //when App component loads, find token 
     const token = localStorage.getItem('token');
+
+    const userJson = localStorage.getItem('user') || '{}';
+    const user: User = JSON.parse(userJson);
+
     if(token) {
       this.authService.decodedToken = this.jwtHelper.decodeToken(token);
+    }
+
+    if(user) {
+      this.authService.currentUser = user;
     }
   }
 

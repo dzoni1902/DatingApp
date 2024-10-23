@@ -1,6 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using AutoMapper;
 using DatingApp.Server.Data;
 using DatingApp.Server.DTOs;
 using DatingApp.Server.Models;
@@ -17,11 +18,13 @@ namespace DatingApp.Server.Controllers
     {
         private readonly IAuthRepository _repo;
         private readonly IConfiguration _config;
+        private readonly IMapper _mapper;
 
-        public AuthController(IAuthRepository repo, IConfiguration config)
+        public AuthController(IAuthRepository repo, IConfiguration config, IMapper mapper)
         {
             _repo = repo;
             _config = config;
+            _mapper = mapper;
         }
 
         //[EnableCors("AllowSpecificOrigin")]
@@ -78,8 +81,13 @@ namespace DatingApp.Server.Controllers
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
-            return Ok( new {
-                token = tokenHandler.WriteToken(token)
+            //additional user object for sending loged in user data (main photo url)
+            var user = _mapper.Map<UserForListDto>(userFromRepo);
+
+            return Ok( new 
+            {
+                token = tokenHandler.WriteToken(token),
+                user
             });
         }
     }
