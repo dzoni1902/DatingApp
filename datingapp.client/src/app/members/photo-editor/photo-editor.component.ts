@@ -68,7 +68,10 @@ export class PhotoEditorComponent implements OnInit {
       if(this.currentMain) {
         this.currentMain.isMain = false;
         photo.isMain = true;
-        this.getMemberPhotoChange.emit(photo.url);
+        this.authService.changeMemberPhoto(photo.url);
+        if(this.authService.currentUser)
+          this.authService.currentUser.photoUrl = photo.url;
+        localStorage.setItem('user', JSON.stringify(this.authService.currentUser));   //override user in local storage
       }
       
     }, error => {

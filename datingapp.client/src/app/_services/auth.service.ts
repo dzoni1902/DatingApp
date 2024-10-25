@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Token } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { map } from 'rxjs';
+import { BehaviorSubject, map } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { User } from '../_models/user';
 
@@ -16,9 +16,16 @@ export class AuthService {
   //property to store our decoded token in AuthService
   decodedToken: any;
   currentUser?: User;
+  photoUrl = new BehaviorSubject<string>('../../assets/user.png');
+  currentPhotoUrl = this.photoUrl.asObservable();
 
   //we need http module so we need to inject it here
   constructor(private http: HttpClient) { }
+
+  //when user logs in, we update the photoUrl
+  changeMemberPhoto(photoUrl: string) {
+    this.photoUrl.next(photoUrl);
+  }
 
   //metod and model which we pass from the navbar
   login(model: any) {
@@ -35,7 +42,8 @@ export class AuthService {
             //save token
             this.decodedToken = this.jwtHepler.decodeToken(user.token);
             this.currentUser = user.user;
-            console.log(this.decodedToken);
+            if(this.currentUser)
+              this.changeMemberPhoto(this.currentUser.photoUrl);
           }
         })
       )
