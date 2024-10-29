@@ -4,6 +4,7 @@ import { compileNgModule } from '@angular/compiler';
 import { AlertifyService } from '../_services/alertify.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
 
 @Component({
   selector: 'app-register',
@@ -14,7 +15,7 @@ export class RegisterComponent implements OnInit {
   @Output() cancelRegister = new EventEmitter();           //output props emit EVENT
   model: any = {};
   registerForm?: FormGroup;
-  //bsConfig: Partial<BsDatepickerConfig>;
+  bsConfig?: Partial<BsDatepickerConfig>;   //Partial - to make everything optional
 
   constructor(
     private authService: AuthService,
@@ -24,9 +25,9 @@ export class RegisterComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-      // this.bsConfig = {
-      //   containerClass: 'theme-red'
-      // };
+      this.bsConfig = {
+        containerClass: 'theme-green'
+      };
       this.createRegisterForm();
     }
   
