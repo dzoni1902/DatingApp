@@ -32,6 +32,7 @@ namespace DatingApp.Server.Helpers
             CreateMap<UserForUpdateDto, User>()
                 .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
 
+            CreateMap<UserForRegisterDto, User>();
         }
     }
 }
