@@ -50,8 +50,8 @@ export class AuthService {
   }
 
   //to use this method, we have to subscribe to it in our component
-  register(model: any) {
-    return this.http.post(this.baseUrl + 'register', model);
+  register(user: User) {
+    return this.http.post(this.baseUrl + 'register', user);
   }
 
   loggedIn() {
