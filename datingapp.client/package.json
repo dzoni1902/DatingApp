@@ -29,6 +29,7 @@
     "jest-editor-support": "*",
     "ng2-file-upload": "^6.0.0",
     "ngx-bootstrap": "^12.0.0",
+    "ngx-timeago": "^3.0.0",
     "primeicons": "^7.0.0",
     "primeng": "^17.18.11",
     "run-script-os": "*",

@@ -2,12 +2,14 @@
 using AutoMapper;
 using DatingApp.Server.Data;
 using DatingApp.Server.DTOs;
+using DatingApp.Server.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DatingApp.Server.Controllers
 {
+    [ServiceFilter(typeof(LogUserActivity))]
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]

@@ -7,6 +7,7 @@ using DatingApp.Server.Helpers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
@@ -51,6 +52,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<IDatingRepository, DatingRepository>();
+
+//create new instance of this per requst
+builder.Services.AddScoped<LogUserActivity>();
 
 //we need to add Auth middleware in order to explain how to authorize the user
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
