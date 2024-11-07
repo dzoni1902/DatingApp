@@ -1,4 +1,5 @@
-﻿using DatingApp.Server.Models;
+﻿using DatingApp.Server.Helpers;
+using DatingApp.Server.Models;
 
 namespace DatingApp.Server.Data
 {
@@ -10,7 +11,7 @@ namespace DatingApp.Server.Data
 
         Task<bool> SaveAll();
 
-        Task<IEnumerable<User>> GetUsers();
+        Task<PagedList<User>> GetUsers(UserParams userParams);
 
         Task<User> GetUser(int id);
         
