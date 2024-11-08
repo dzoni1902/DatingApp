@@ -11,6 +11,7 @@ import { GalleriaModule } from 'primeng/galleria';
 import { FileUploadModule } from 'ng2-file-upload';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { TimeagoModule } from 'ngx-timeago';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -61,6 +62,7 @@ export function getToken() {
     GalleriaModule,
     FileUploadModule,
     ReactiveFormsModule,
+    PaginationModule.forRoot(),
     TimeagoModule.forRoot(),
     BsDatepickerModule.forRoot(),
     BsDropdownModule.forRoot(),
