@@ -1,5 +1,37 @@
+<div class="text-center mt-3">
+  <h2>Your matches - {{pagination.totalItems}} found</h2>
+</div>
 
-<div class="container mt-5"> 
+<div class="container mt-3"> 
+
+  <form class="d-flex align-items-center flex-wrap" #form="ngForm" (ngSubmit)="loadUsers()" novalidate>
+    <div class="form-group d-flex align-items-center mb-2">
+      <label for="minAge" class="form-label me-2 mt-2">Age From</label>
+      <input type="number" class="form-control me-2" style="width: 70px" id="minAge" 
+      [(ngModel)]="userParams.minAge" name="minAge">
+    </div>
+  
+    <div class="form-group d-flex align-items-center mb-2">
+      <label for="maxAge" class="form-label me-2 mt-2">Age To</label>
+      <input type="number" class="form-control me-2" style="width: 70px" id="maxAge"
+      [(ngModel)]="userParams.maxAge" name="maxAge">
+    </div>
+  
+    <div class="form-group d-flex align-items-center mb-2">
+      <label for="gender" class="form-label me-2 mt-2">Show</label>
+      <select class="form-control me-2" style="width: 130px" id="gender"
+      [(ngModel)]="userParams.gender" name="gender">
+        <option *ngFor="let gender of genderList" [value]="gender.value">
+          {{gender.display}}
+        </option>
+      </select>
+    </div>
+  
+    <button type="submit" class="btn btn-primary me-2 mb-2">Apply Filters</button>
+    <button type="button" class="btn btn-info mb-2" (click)="resetFilters()">Reset Filter</button>
+  </form>  
+  <br>
+
   <div class="row">
     <div *ngFor="let user of users" class="col-lg-2 col-md-3 col-sm-6">
       <app-member-card [user]="user"></app-member-card>
