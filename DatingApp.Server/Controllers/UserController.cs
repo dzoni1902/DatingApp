@@ -89,7 +89,7 @@ namespace DatingApp.Server.Controllers
                 return BadRequest("You already like this user.");
 
             if (await _repo.GetUser(recipientId) == null)
-                return NotFound();
+                return NotFound("User not found.");
 
             like = new Like
             {
