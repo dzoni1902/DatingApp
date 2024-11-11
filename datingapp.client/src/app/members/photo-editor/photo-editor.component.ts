@@ -81,7 +81,8 @@ export class PhotoEditorComponent implements OnInit {
       }
       
     }, error => {
-      this.alertify.error(error);
+      const errorMessage = error.message || 'An error occurred'; 
+      this.alertify.error(errorMessage);
     })
   }
 

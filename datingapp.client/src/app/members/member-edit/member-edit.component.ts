@@ -50,7 +50,8 @@ export class MemberEditComponent implements OnInit {
           this.userForm.reset(this.user); // Reset form values to saved state
         },
         error: (error) => {
-          this.alertify.error(error);
+          const errorMessage = error.message || 'An error occurred'; 
+          this.alertify.error(errorMessage);
         }
       });
     }

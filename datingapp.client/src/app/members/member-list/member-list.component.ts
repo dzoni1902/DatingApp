@@ -55,7 +55,8 @@ export class MemberListComponent implements OnInit {
           this.users = res.result ?? [];
           this.pagination = res.pagination ?? { currentPage: 1, itemsPerPage: 5, totalItems: 0, totalPages: 1 };
     }, error => {
-      this.alertify.error(error);
+      const errorMessage = error.message || 'An error occurred'; 
+      this.alertify.error(errorMessage);
     });
   }
 
