@@ -13,23 +13,31 @@ export class UserService {
   baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
-  getUsers(page?: number, itemsPerPage?: number, userParams?: any): Observable<PaginatedResult<User[]>> {
+  getUsers(page?: number, itemsPerPage?: number, userParams?: any, likesParam?: any): Observable<PaginatedResult<User[]>> {
 
     const paginatedResult: PaginatedResult<User[]> = new PaginatedResult<User[]>();
 
     let params = new HttpParams();
   
-    if (page !== undefined) {
+    if (page != null) {
       params = params.append('pageNumber', page.toString());
     }
-    if (itemsPerPage !== undefined) {
+    if (itemsPerPage != null) {
       params = params.append('pageSize', itemsPerPage.toString());
     }
-    if (userParams !== undefined) {
+    if (userParams != null) {
       params = params.append('minAge', userParams.minAge.toString());
       params = params.append('maxAge', userParams.maxAge.toString());
       params = params.append('gender', userParams.gender.toString());
       params = params.append('orderBy', userParams.orderBy.toString());
+    }
+
+    if (likesParam === 'Likers') {
+      params = params.append('likers', 'true');
+    }
+
+    if (likesParam === 'Likees') {
+      params = params.append('likees', 'true');
     }
   
     return this.http.get<User[]>(this.baseUrl + 'users', { observe: 'response', params })
