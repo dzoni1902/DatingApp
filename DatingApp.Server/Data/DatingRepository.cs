@@ -32,7 +32,10 @@ namespace DatingApp.Server.Data
 
         public async Task<PagedList<User>> GetUsers(UserParams userParams)
         {
-            var users = _context.Users.Include(u => u.Photos).OrderByDescending(u => u.LastActive).AsQueryable();
+            var users = _context.Users
+                .Include(u => u.Photos)
+                .OrderByDescending(u => u.LastActive)
+                .AsQueryable();
 
             users = users.Where(u => u.Id != userParams.UserId);
             users = users.Where(u => u.Gender == userParams.Gender);
@@ -114,9 +117,32 @@ namespace DatingApp.Server.Data
             return await _context.Messages.FirstOrDefaultAsync(m => m.Id == id);
         }
 
-        public Task<PagedList<Message>> GetMessagesForUser()
+        public async Task<PagedList<Message>> GetMessagesForUser(MessageParams messageParams)
         {
-            throw new NotImplementedException();
+            var messages = _context.Messages
+                .Include(m => m.Sender).ThenInclude(s => s.Photos)
+                .Include(m => m.Recipient).ThenInclude(r => r.Photos)
+                .AsQueryable();
+
+            //implement inbox, outbox pattern
+            switch (messageParams.MessageContainer)
+            {
+                case "Inbox":
+                    messages = messages.Where(m => m.RecipientId == messageParams.UserId); 
+                    break;
+
+                case "Outbox":
+                    messages = messages.Where(m => m.SenderId == messageParams.UserId);
+                    break;
+
+                default:    //unread
+                    messages = messages.Where(m => m.IsRead == false && m.RecipientId == messageParams.UserId);
+                    break;
+            }
+
+            messages = messages.OrderByDescending(m => m.MessageSent);
+
+            return await PagedList<Message>.CreateAsync(messages, messageParams.PageNumber, messageParams.PageSize);
         }
 
         public Task<IEnumerable<Message>> GetMessageThread(int userId, int recipientId)
