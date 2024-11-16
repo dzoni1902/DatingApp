@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { User } from '../_models/user';
 import { PaginatedResult } from '../_models/pagination';
+import { Message } from '../_models/message';
 
 
 @Injectable({
@@ -76,5 +77,34 @@ export class UserService {
   sendLike(userId: number, recipientId: number) {
 
     return this.http.post(this.baseUrl + 'users/' + userId + '/like/' + recipientId, {});
+  }
+
+  getMessages(userId: number, page?: number, itemsPerPage?: number, messageContainer?: string) {
+
+    const paginatedResult: PaginatedResult<Message[]> = new PaginatedResult<Message[]>();
+
+    let params = new HttpParams();
+
+    if (messageContainer != null) {
+      params = params.append('MessageContainer', messageContainer?.toString());
+    }
+    if (page != null) {
+      params = params.append('pageNumber', page.toString());
+    }
+    if (itemsPerPage != null) {
+      params = params.append('pageSize', itemsPerPage.toString());
+    }
+                                                              //we need to observe the full response, so we have access to pagination header
+    return this.http.get<Message[]>(this.baseUrl + 'users/' + userId + '/messages', { observe: 'response', params })
+      .pipe(    //this method allows access to rxjs operators, we want users from the response body and pagination info from headers
+        map(response => {
+          paginatedResult.result = response.body ?? []; // default to an empty array if body is null
+          const paginationHeader = response.headers.get('Pagination');
+          if (paginationHeader) {
+            paginatedResult.pagination = JSON.parse(paginationHeader);
+          }
+          return paginatedResult;
+        })
+      );
   }
 }
