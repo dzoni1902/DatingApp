@@ -107,4 +107,9 @@ export class UserService {
         })
       );
   }
+
+  getMessageConversation(userId: number, recipientId: number) {
+
+    return this.http.get<Message[]>(this.baseUrl + 'users/' + userId + '/messages/thread/' + recipientId);
+  }
 }
