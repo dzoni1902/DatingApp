@@ -112,4 +112,9 @@ export class UserService {
 
     return this.http.get<Message[]>(this.baseUrl + 'users/' + userId + '/messages/thread/' + recipientId);
   }
+
+  sendMessage(userId: number, message: Message): Observable<Message> {
+    
+    return this.http.post<Message>(this.baseUrl + 'users/' + userId + '/messages', message); 
+  }
 }
