@@ -117,4 +117,9 @@ export class UserService {
     
     return this.http.post<Message>(this.baseUrl + 'users/' + userId + '/messages', message); 
   }
+
+  deleteMessage(userId: number, messageId: number) {
+
+    return this.http.post(this.baseUrl + 'users/' + userId + '/messages/' + messageId, {});
+  }
 }

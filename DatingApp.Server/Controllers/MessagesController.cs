@@ -96,11 +96,36 @@ namespace DatingApp.Server.Controllers
             {
                 var messageToReturn = _mapper.Map<MessageToReturnDto>(message);
 
-                                       //route name    //route values                      //value to return
+                //route name    //route values                      //value to return
                 return CreatedAtRoute("GetMessage", new { userId = userId, id = message.Id }, messageToReturn);
             }
 
-            throw new Exception("Creating the message failed on save."); 
+            throw new Exception("Creating the message failed on save.");
+        }
+
+        //we'll use this to delete message, since we don't want to delete it unless both sides of conversation want to delete it
+        //(for exp. recipiend deletes the message from his inbox, and that way deletes it also from senders outbox)
+        [HttpPost("{id}")]
+        public async Task<IActionResult> DeleteMessage(int userId, int id)
+        {
+            if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+                return Unauthorized();
+
+            var messageFromRepo = await _repo.GetMessage(id);
+
+            if (messageFromRepo.SenderId == userId)
+                messageFromRepo.SenderDeleted = true;
+
+            if (messageFromRepo.RecipientId == userId)
+                messageFromRepo.RecipientDeleted = true;
+
+            if (messageFromRepo.SenderDeleted && messageFromRepo.RecipientDeleted)
+                _repo.Delete(messageFromRepo);
+
+            if (await _repo.SaveAll())
+                return NoContent();
+
+            throw new Exception("Error deleting the message.");
         }
     }
 }
