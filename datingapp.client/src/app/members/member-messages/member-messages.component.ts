@@ -3,6 +3,7 @@ import { Message } from '../../_models/message';
 import { AlertifyService } from '../../_services/alertify.service';
 import { AuthService } from '../../_services/auth.service';
 import { UserService } from '../../_services/user.service';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-member-messages',
@@ -23,7 +24,18 @@ export class MemberMessagesComponent implements OnInit {
   }
 
   loadMessages() {
+    const currentUserId = +this.authService.decodedToken.nameid;  //force it to be a number
+
     this.userService.getMessageConversation(this.authService.decodedToken.nameid, this.recipientId!)
+      .pipe(
+        tap(messages => {
+          for (let i = 0; i < messages.length; i++) {
+            if (messages[i].isRead === false && messages[i].recipientId === currentUserId) {
+              this.userService.markAsRead(currentUserId, messages[i].id);
+            }
+          }
+        })
+      )
       .subscribe(messages => {
         this.messages = messages;
     }, error => {

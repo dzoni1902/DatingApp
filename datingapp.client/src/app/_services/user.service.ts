@@ -122,4 +122,10 @@ export class UserService {
 
     return this.http.post(this.baseUrl + 'users/' + userId + '/messages/' + messageId, {});
   }
+
+  markAsRead(userId: number, messageId: number) {
+
+    return this.http.post(this.baseUrl + 'users/' + userId + '/messages/' + messageId + '/read', {})
+      .subscribe();   //because we don't send anything back
+  }
 }
