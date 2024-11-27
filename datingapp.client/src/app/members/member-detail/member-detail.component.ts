@@ -31,11 +31,11 @@ export class MemberDetailComponent implements OnInit, AfterViewInit {
       {
         width: '400px',
         height: '400px',
-        numVisible: 4,
-        showThumbnails: true,
+        numVisible: 5,
+        showThumbnails: false,
         thumbnailHeight: '60px',
         showItemNavigators: true,
-        showThumbnailNavigators: true
+        showThumbnailNavigators: false
       }
     ];
 

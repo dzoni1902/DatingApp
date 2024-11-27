@@ -47,14 +47,14 @@
           </tab>
           <tab heading="Photos">
             <div class="card">
-              <p-galleria [value]="galleryImages" [responsiveOptions]="galleryOptions">
-                <ng-template pTemplate="item" let-item>
-                  <img [src]="item.itemImageSrc" [alt]="item.alt" style="width: 60%;" />
-                </ng-template>
-                <ng-template pTemplate="thumbnail" let-item>
-                  <img [src]="item.thumbnailImageSrc" style="width: 100%;" />
-                </ng-template>
-              </p-galleria>
+            <p-galleria [value]="galleryImages" [responsiveOptions]="galleryOptions"  
+              [numVisible]="5" [circular]="true" [showItemNavigators]="true" [showThumbnails]="false"> 
+              <ng-template pTemplate="item" let-item> 
+                <div class="image-container"> 
+                  <img [src]="item.itemImageSrc" [alt]="item.alt" style="width: 76%;"/> 
+                </div> 
+              </ng-template> 
+            </p-galleria>
             </div>
           </tab>
           <tab heading="Messages">
