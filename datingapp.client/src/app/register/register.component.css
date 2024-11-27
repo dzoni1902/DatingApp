@@ -1,3 +1,12 @@
 .form-group {
     margin-top: 5px;
 }
+
+.control-label {
+    margin-right: 10px;
+}
+
+.radio-margin { 
+    margin-right: 3px; 
+    margin-left: 15px;
+}
