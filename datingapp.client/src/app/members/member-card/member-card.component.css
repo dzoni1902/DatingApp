@@ -10,6 +10,7 @@
     transform: scale(1.0, 1.0);
     transition-duration: 500ms;
     transition-timing-function: ease-out;
+    width: 100%;
 }
 
 .card-img-wrapper {
@@ -36,3 +37,6 @@
     transition: all 0.3s ease-in-out;
 }
 
+.card-title i {
+margin-right: 5px;
+}

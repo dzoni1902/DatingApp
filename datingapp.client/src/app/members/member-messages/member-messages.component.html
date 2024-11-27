@@ -6,34 +6,30 @@
     <ul class="chat">
       <li *ngFor="let message of messages">
         <!-- messages to them -->
-        <div *ngIf="message.senderId == recipientId">
+        <div *ngIf="message.senderId == recipientId" class="chat-reversed">
+          <small class="chat-info text-muted float-right">
+            <span class="fa fa-clock-o">{{message.messageSent | timeago}}</span>
+          </small>
           <span class="chat-img float-left">
             <img src="{{message.senderPhotoUrl}}" alt="{{message.senderKnownAs}}" class="rounded-circle">
           </span>
           <div class="chat-body">
-            <div class="header">
-              <strong class="primary-font">{{message.senderKnownAs}}</strong>
-              <small class="text-muted float-right">
-                <span class="fa fa-clock-o">{{message.messageSent | timeago}}</span>
-              </small>
-            </div>
-            <p>{{message.content}}</p>
+              <strong class="chat-name primary-font">{{message.senderKnownAs}}</strong>
+            <p class="chat-text">{{message.content}}</p>
           </div>
         </div>
         <!-- messages to me -->
         <div *ngIf="message.senderId != recipientId">
+          <small class="chat-info text-muted">
+            <span class="fa fa-clock-o">{{message.messageSent | timeago}}</span>
+            <span *ngIf="!message.isRead" class="text-danger">(unread)</span>
+            <span *ngIf="message.isRead" class="text-success">(Read {{message.dateRead | timeago}})</span>
+          </small>
           <span class="chat-img float-right">
             <img src="{{message.senderPhotoUrl}}" alt="{{message.senderKnownAs}}" class="rounded-circle">
           </span>
           <div class="chat-body">
-            <div class="header">
-              <small class="text-muted">
-                <span class="fa fa-clock-o">{{message.messageSent | timeago}}</span>
-                <span *ngIf="!message.isRead" class="text-danger">(unread)</span>
-                <span *ngIf="message.isRead" class="text-success">(Read {{message.dateRead | timeago}})</span>
-              </small>
-              <strong class="primary-font float-right">{{message.senderKnownAs}}</strong>
-            </div>
+              <strong class="chat-name primary-font float-right">{{message.senderKnownAs}}</strong>
             <p>{{message.content}}</p>
           </div>
         </div>

@@ -52,3 +52,15 @@
     border-top: 1px solid #eee;
     padding: 15px 0;
   }
+
+  .p-galleria-thumbnail-item-content {
+    width: 100%;
+}
+
+.p-galleria .p-galleria-thumbnail-container {
+  background: transparent;
+}
+
+.p-galleria button .p-element {
+  color: #2fa4e7;
+}

@@ -9,9 +9,11 @@
 }
 
 .chat li {
+    position: relative;
     margin-bottom: 10px;
     padding-bottom: 10px;
     border-bottom: 1px dotted #b3a9a9;
+    text-align: right;
 }
 
 .rounded-circle {
@@ -22,4 +24,39 @@
 .card-body {
     overflow-y: scroll;
     height: 400px;
+}
+
+.chat-text {
+    max-width: 80%;
+    margin-right: auto;
+    margin-top: 10px;
+}
+
+.chat-info {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+}
+
+.chat-info span {
+    display: block;
+    margin-bottom: 3px;
+    text-align: left;
+}
+
+.chat-name {
+    margin-right: 10px;
+}
+
+.chat-reversed {
+    text-align: left;
+}
+
+.chat-reversed .chat-info {
+    left: unset;
+    right: 10px;
+}
+
+.chat-reversed .chat-name {
+    margin-left: 9px;
 }

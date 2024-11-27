@@ -7,3 +7,37 @@ img {
     border: 2px solid white;
     display: inline;
 }
+
+.navbar-brand {
+    margin-top: -3px;
+}
+
+.dropdown-toggle {
+    text-decoration: none;
+    transition: opacity .3s ease;
+}
+
+.dropdown-toggle:hover {
+   opacity: 0.8;
+}
+
+.dropdown-toggle::after {
+    position: relative;
+    top: 1px;
+}
+
+ul.dropdown-menu {
+    padding: 0;
+}
+
+.dropdown-divider {
+    margin: 0;
+}
+
+.dropdown-item {
+    padding: 10px 15px;
+}
+
+.dropdown-item i {
+    margin-right: 5px;
+}
